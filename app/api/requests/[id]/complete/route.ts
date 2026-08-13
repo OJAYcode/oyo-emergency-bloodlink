@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server";import { currentUser } from "@/lib/auth";import { completeRequest } from "@/lib/store";
+export async function POST(req:Request,{params}:{params:Promise<{id:string}>}){const user=await currentUser();const {id}=await params;if(!user?.hospitalId)return NextResponse.redirect(new URL('/login',req.url));const result=await completeRequest(id,user.hospitalId,user.id);const key=result.ok?'message':'error';return NextResponse.redirect(new URL(`/requests/${id}?${key}=${encodeURIComponent(result.message)}`,req.url))}

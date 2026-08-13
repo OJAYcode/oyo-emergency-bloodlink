@@ -1,0 +1,12 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+enum UserRole { ADMIN HOSPITAL_USER }
+enum BloodGroup { A_POS A_NEG B_POS B_NEG AB_POS AB_NEG O_POS O_NEG }
+enum RequestStatus { PENDING ACCEPTED UNAVAILABLE COMPLETED CANCELLED }
+enum Urgency { EMERGENCY URGENT NORMAL }
+model Hospital { id String @id @default(cuid()); name String; location String; area String; phone String; email String @unique; active Boolean @default(true); users User[]; inventory BloodInventory[]; sentRequests BloodRequest[] @relation("RequestingHospital"); suppliedRequests BloodRequest[] @relation("SupplyingHospital") }
+model User { id String @id @default(cuid()); name String; email String @unique; passwordHash String; role UserRole; active Boolean @default(true); hospitalId String?; hospital Hospital? @relation(fields:[hospitalId],references:[id]); logs InventoryLog[] }
+model BloodInventory { id String @id @default(cuid()); hospitalId String; hospital Hospital @relation(fields:[hospitalId],references:[id]); bloodGroup BloodGroup; quantity Int; reserved Int @default(0); updatedAt DateTime @updatedAt; @@unique([hospitalId,bloodGroup]) }
+model BloodRequest { id String @id @default(cuid()); requestingHospitalId String; requestingHospital Hospital @relation("RequestingHospital",fields:[requestingHospitalId],references:[id]); supplyingHospitalId String?; supplyingHospital Hospital? @relation("SupplyingHospital",fields:[supplyingHospitalId],references:[id]); bloodGroup BloodGroup; quantity Int; urgency Urgency; note String; contactPerson String; contactPhone String; status RequestStatus @default(PENDING); createdAt DateTime @default(now()); updatedAt DateTime @updatedAt; alerts Alert[] }
+model Alert { id String @id @default(cuid()); hospitalId String; requestId String; request BloodRequest @relation(fields:[requestId],references:[id]); read Boolean @default(false); createdAt DateTime @default(now()) }
+model InventoryLog { id String @id @default(cuid()); action String; detail String; hospitalId String?; userId String?; user User? @relation(fields:[userId],references:[id]); objectId String?; createdAt DateTime @default(now()) }

@@ -1,0 +1,10 @@
+import Link from "next/link";
+import { currentUser } from "@/lib/auth";
+import { getStore, hospital } from "@/lib/store";
+import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
+
+const hospitalNav=[['/dashboard','◈','Dashboard'],['/availability','◉','Blood Availability'],['/requests/new','＋','Request Blood'],['/requests','▤','My Requests'],['/inventory','▣','Inventory'],['/alerts','◌','Alerts']];
+const adminNav=[['/admin','◈','Admin Dashboard'],['/availability','◉','Blood Availability'],['/admin?view=hospitals','▣','Hospitals'],['/admin?view=users','♙','Users'],['/admin?view=inventory','▤','Inventory'],['/admin?view=requests','⇄','Requests']];
+export async function AppShell({children,active}:{children:ReactNode;active:string}) { const user=await currentUser(); if(!user)redirect('/login'); const store=await getStore();const h=hospital(store,user.hospitalId);const nav=user.role==='ADMIN'?adminNav:hospitalNav;return <div className="shell"><aside className="sidebar"><div className="brand"><span className="brand-mark">✚</span><span>Oyo Emergency<br/>BloodLink</span></div><div className="nav-label">{user.role==='ADMIN'?'ADMINISTRATION':'COORDINATION'}</div>{nav.map(([href,icon,label])=><Link className={`nav-item ${active===href||active.startsWith(href+'/')?'active':''}`} href={href} key={href}><span>{icon}</span>{label}</Link>)}<form action="/api/auth/logout" method="post"><button className="logout">↪ Sign out</button></form></aside><main className="content"><header className="topbar"><span className="badge">PROTOTYPE — SAMPLE DATA ONLY</span><div className="user-chip"><strong>{user.name}</strong>{user.role==='ADMIN'?'System administrator':h?.name}</div></header>{children}</main></div> }
+export function Disclaimer(){return <div className="notice warning">Prototype only. This system does not determine blood compatibility, approve transfusions, or replace medical professionals. Blood availability must be verified by authorized medical personnel before transfusion.</div>}

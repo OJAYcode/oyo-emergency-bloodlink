@@ -1,0 +1,12 @@
+export type Role = "ADMIN" | "HOSPITAL_USER";
+export type BloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+export type RequestStatus = "PENDING" | "ACCEPTED" | "UNAVAILABLE" | "COMPLETED" | "CANCELLED";
+export type Urgency = "EMERGENCY" | "URGENT" | "NORMAL";
+export type Hospital = { id:string; name:string; location:string; area:string; phone:string; email:string; type:string; active:boolean };
+export type User = { id:string; name:string; email:string; passwordHash:string; role:Role; hospitalId?:string; active:boolean };
+export type Inventory = { id:string; hospitalId:string; bloodGroup:BloodGroup; quantity:number; reserved:number; updatedAt:string };
+export type BloodRequest = { id:string; requestingHospitalId:string; supplyingHospitalId?:string; bloodGroup:BloodGroup; quantity:number; urgency:Urgency; note:string; contactPerson:string; contactPhone:string; status:RequestStatus; createdAt:string; updatedAt:string };
+export type Alert = { id:string; hospitalId:string; requestId:string; read:boolean; createdAt:string };
+export type Log = { id:string; action:string; hospitalId?:string; userId?:string; objectId?:string; createdAt:string; detail:string };
+export type Store = { hospitals:Hospital[]; users:User[]; inventory:Inventory[]; requests:BloodRequest[]; alerts:Alert[]; logs:Log[] };
+export const bloodGroups: BloodGroup[] = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];

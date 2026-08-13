@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server";export async function POST(req:Request){const r=NextResponse.redirect(new URL('/login',req.url));r.cookies.set('bloodlink_session','',{path:'/',maxAge:0});return r}

@@ -1,0 +1,27 @@
+{
+  "hospitals":[
+    {"id":"h-oyo","name":"Oyo Central Hospital","location":"Bashorun Road","area":"Oyo","phone":"0800-100-2001","email":"oyo.central@bloodlink.demo","type":"General Hospital","active":true},
+    {"id":"h-ibadan","name":"Ibadan Emergency Medical Centre","location":"Ring Road","area":"Ibadan South-West","phone":"0800-100-2002","email":"ibadan.emergency@bloodlink.demo","type":"Emergency Centre","active":true},
+    {"id":"h-bodija","name":"Bodija General Hospital","location":"Bodija","area":"Ibadan North","phone":"0800-100-2003","email":"bodija.general@bloodlink.demo","type":"General Hospital","active":true},
+    {"id":"h-challenge","name":"Challenge Medical Centre","location":"Challenge","area":"Ibadan Central","phone":"0800-100-2004","email":"challenge.medical@bloodlink.demo","type":"Medical Centre","active":true},
+    {"id":"h-rural","name":"Rural Oyo Community Hospital","location":"Akinmorin Road","area":"Rural Oyo","phone":"0800-100-2005","email":"rural.oyo@bloodlink.demo","type":"Community Hospital","active":true}
+  ],
+  "users":[
+    {"id":"u-admin","name":"System Administrator","email":"admin@bloodlink.demo","passwordHash":"Admin123!","role":"ADMIN","active":true},
+    {"id":"u-oyo","name":"Dr. Adewale A.","email":"oyo.central@bloodlink.demo","passwordHash":"Hospital123!","role":"HOSPITAL_USER","hospitalId":"h-oyo","active":true},
+    {"id":"u-ibadan","name":"Dr. Adebayo O.","email":"ibadan.emergency@bloodlink.demo","passwordHash":"Hospital123!","role":"HOSPITAL_USER","hospitalId":"h-ibadan","active":true},
+    {"id":"u-bodija","name":"Nurse Kemi I.","email":"bodija.general@bloodlink.demo","passwordHash":"Hospital123!","role":"HOSPITAL_USER","hospitalId":"h-bodija","active":true},
+    {"id":"u-challenge","name":"Dr. Musa B.","email":"challenge.medical@bloodlink.demo","passwordHash":"Hospital123!","role":"HOSPITAL_USER","hospitalId":"h-challenge","active":true},
+    {"id":"u-rural","name":"Nurse Folake T.","email":"rural.oyo@bloodlink.demo","passwordHash":"Hospital123!","role":"HOSPITAL_USER","hospitalId":"h-rural","active":true}
+  ],
+  "inventory":[
+    {"id":"i-oyo-o+","hospitalId":"h-oyo","bloodGroup":"O+","quantity":10,"reserved":0,"updatedAt":"2026-08-13T09:50:00.000Z"},{"id":"i-oyo-a+","hospitalId":"h-oyo","bloodGroup":"A+","quantity":7,"reserved":0,"updatedAt":"2026-08-13T09:35:00.000Z"},{"id":"i-oyo-o-","hospitalId":"h-oyo","bloodGroup":"O-","quantity":2,"reserved":0,"updatedAt":"2026-08-13T07:10:00.000Z"},
+    {"id":"i-ib-o+","hospitalId":"h-ibadan","bloodGroup":"O+","quantity":2,"reserved":0,"updatedAt":"2026-08-13T09:45:00.000Z"},{"id":"i-ib-a-","hospitalId":"h-ibadan","bloodGroup":"A-","quantity":3,"reserved":0,"updatedAt":"2026-08-13T09:30:00.000Z"},{"id":"i-ib-b+","hospitalId":"h-ibadan","bloodGroup":"B+","quantity":5,"reserved":0,"updatedAt":"2026-08-13T08:50:00.000Z"},
+    {"id":"i-bo-o+","hospitalId":"h-bodija","bloodGroup":"O+","quantity":6,"reserved":0,"updatedAt":"2026-08-13T09:10:00.000Z"},{"id":"i-bo-ab+","hospitalId":"h-bodija","bloodGroup":"AB+","quantity":3,"reserved":0,"updatedAt":"2026-08-13T08:20:00.000Z"},
+    {"id":"i-ch-o-","hospitalId":"h-challenge","bloodGroup":"O-","quantity":4,"reserved":0,"updatedAt":"2026-08-13T09:25:00.000Z"},{"id":"i-ch-b-","hospitalId":"h-challenge","bloodGroup":"B-","quantity":2,"reserved":0,"updatedAt":"2026-08-13T08:40:00.000Z"},
+    {"id":"i-ru-a+","hospitalId":"h-rural","bloodGroup":"A+","quantity":4,"reserved":0,"updatedAt":"2026-08-13T07:00:00.000Z"},{"id":"i-ru-o+","hospitalId":"h-rural","bloodGroup":"O+","quantity":3,"reserved":0,"updatedAt":"2026-08-13T06:30:00.000Z"}
+  ],
+  "requests":[{"id":"REQ-DEMO-001","requestingHospitalId":"h-rural","supplyingHospitalId":"h-oyo","bloodGroup":"A+","quantity":2,"urgency":"URGENT","note":"Demo completed coordination.","contactPerson":"Nurse Folake","contactPhone":"0800-100-2005","status":"COMPLETED","createdAt":"2026-08-12T11:00:00.000Z","updatedAt":"2026-08-12T13:20:00.000Z"},{"id":"REQ-DEMO-002","requestingHospitalId":"h-bodija","bloodGroup":"O-","quantity":2,"urgency":"URGENT","note":"Please confirm reported availability.","contactPerson":"Nurse Kemi","contactPhone":"0800-100-2003","status":"PENDING","createdAt":"2026-08-13T08:55:00.000Z","updatedAt":"2026-08-13T08:55:00.000Z"}],
+  "alerts":[{"id":"a-1","hospitalId":"h-oyo","requestId":"REQ-DEMO-002","read":false,"createdAt":"2026-08-13T08:55:00.000Z"},{"id":"a-2","hospitalId":"h-challenge","requestId":"REQ-DEMO-002","read":false,"createdAt":"2026-08-13T08:55:00.000Z"}],
+  "logs":[{"id":"l-1","action":"Inventory updated","hospitalId":"h-oyo","userId":"u-oyo","objectId":"i-oyo-o+","createdAt":"2026-08-13T09:50:00.000Z","detail":"O+ inventory updated to 10 reported units."},{"id":"l-2","action":"Request marked completed","hospitalId":"h-oyo","objectId":"REQ-DEMO-001","createdAt":"2026-08-12T13:20:00.000Z","detail":"Demo request completed."}]
+}
