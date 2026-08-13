@@ -1,6 +1,7 @@
 import { neon } from '@neondatabase/serverless';
-if(!process.env.DATABASE_URL) throw new Error('DATABASE_URL is missing. Run: vercel env pull .env.local --yes');
-const sql=neon(process.env.DATABASE_URL);
+const connectionString=process.env.POSTGRES_URL||process.env.DATABASE_URL;
+if(!connectionString) throw new Error('POSTGRES_URL is missing. Run: vercel env pull .env.local --yes --environment=production');
+const sql=neon(connectionString);
 await sql`CREATE TABLE IF NOT EXISTS hospitals (id TEXT PRIMARY KEY,name TEXT NOT NULL,location TEXT NOT NULL,area TEXT NOT NULL,phone TEXT NOT NULL,email TEXT UNIQUE NOT NULL,type TEXT NOT NULL,active BOOLEAN NOT NULL DEFAULT true)`;
 await sql`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY,name TEXT NOT NULL,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN ('ADMIN','HOSPITAL_USER')),hospital_id TEXT REFERENCES hospitals(id),active BOOLEAN NOT NULL DEFAULT true)`;
 await sql`CREATE TABLE IF NOT EXISTS blood_inventory (id TEXT PRIMARY KEY,hospital_id TEXT NOT NULL REFERENCES hospitals(id),blood_group TEXT NOT NULL,quantity INTEGER NOT NULL CHECK(quantity>=0),reserved INTEGER NOT NULL DEFAULT 0 CHECK(reserved>=0 AND reserved<=quantity),updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),UNIQUE(hospital_id,blood_group))`;
