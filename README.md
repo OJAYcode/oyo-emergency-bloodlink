@@ -18,24 +18,27 @@ No patient records, real hospital integrations, payment services, GPS, SMS, or c
 
 ## Stack and data mode
 
-The UI uses Next.js App Router, TypeScript, React, and CSS. A PostgreSQL/Prisma relational schema is included at `prisma/schema.prisma` for a hosted deployment.
-
-To keep the lecturer demo zero-cost and immediately runnable without a database service, the running MVP uses a local JSON sample-data store at `data/store.json`. It is created from `data/sample-store.json` on first run. The store provides the same entities needed for the workflow and persists edits during the local demo.
+The UI uses Next.js App Router, TypeScript, React, and CSS. The deployed app uses Neon serverless PostgreSQL, with a matching relational design included in `prisma/schema.prisma`.
 
 ## Setup
 
 1. Install Node.js 20+ and npm (or pnpm).
-2. Copy `.env.example` to `.env` if preparing a future PostgreSQL deployment. No environment variable is required for the local demo mode.
+2. Connect a Neon database through Vercel Storage, then pull its environment variables:
+
+   ```bash
+   vercel link
+   vercel env pull .env.local --yes
+   ```
 3. Install packages:
 
    ```bash
    npm install
    ```
 
-4. Reset/seed the local sample data:
+4. Create the schema and seed the sample data:
 
    ```bash
-   npm run db:seed
+   pnpm run db:setup
    ```
 
 5. Start the application:
@@ -68,7 +71,7 @@ All other seeded hospital accounts use their displayed `.demo` email and `Hospit
 7. Sign in again as Ibadan to see the request status as `ACCEPTED`.
 8. Sign in as Oyo Central and choose **Mark request completed**. The reported O+ quantity becomes 7 and the status is `COMPLETED`.
 
-Run `npm run db:seed` any time to reset the demonstration data.
+Run `pnpm run db:seed` any time to reset the demonstration data.
 
 ## Important limitations and safety
 

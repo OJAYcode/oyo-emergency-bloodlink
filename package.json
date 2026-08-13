@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "db:seed": "node scripts/seed.mjs",
+    "db:push": "dotenv -e .env.local -- node scripts/db-setup.mjs",
+    "db:seed": "dotenv -e .env.local -- node scripts/db-seed.mjs",
+    "db:setup": "pnpm run db:push && pnpm run db:seed",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@neondatabase/serverless": "1.0.2",
     "next": "16.3.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -19,6 +22,7 @@
     "@types/node": "24.10.1",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "dotenv-cli": "8.0.0",
     "typescript": "5.9.3"
   }
 }
